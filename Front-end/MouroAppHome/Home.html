@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MouroApp</title>
+  <link rel="stylesheet" type="text/css" href="HomeStyle.css">
+</head>
+<body>
+  <div class="main" ng-app="HomePage" ng-controller="HomeController">
+    <div class="appName">
+      <h1>MOURO APP</h1>
+    </div>
+    <div class="credits">
+      <h3>created by Mourogiannis Konstantinos (03116056)</h3>
+      <h3>for APPATHON@NTUA 2020</h3>
+    </div>
+    <div class="Menu">
+      <button ng-click="EnterHomePage()">Home</button>
+      <button ng-click="EnterNearestStationsPage()">Nearest stations</button>
+      <button ng-click="EnterCommonPathPage()">Connection Routes</button>
+      <button ng-click="EnterWeatherConditionsPage()">Weather conditions</button>
+    </div>
+    <div class="MainText">
+      <h4>
+        Information about bus stations and bus lines is provided.
+        <br>
+        Find your nearest stations,
+        choose one of the different routes to get to your destination and learn about the stations
+        where it is not raining.
+      </h4>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="HomeScript.js"></script>
+
+</body>
+</html>

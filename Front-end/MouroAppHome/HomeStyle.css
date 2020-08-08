@@ -1,0 +1,59 @@
+.appName {
+  text-align: center;
+  margin: auto;
+  border: 2px solid #FFBF00;
+  padding: 80px;
+  background-color: #FFBF00;
+  font-size: 200%;
+}
+
+.credits {
+  text-align: right;
+  margin: auto;
+  border: 2px solid #FFBF00;
+  padding: 10px;
+  background-color: #FFBF00;
+  font-family: Monospace;
+}
+
+.Menu {
+  overflow: hidden;
+  background-color: #2A2B2DFF;
+}
+
+.Menu button {
+  float: left;
+  display: inline-block;
+  color: #2DA8D8FF;
+  text-align: center;
+  padding: 16px 32px;
+  font-size: 16px;
+  margin: 2px 2px;
+  text-decoration: none;
+  transition-duration: 0.6s;
+  cursor: pointer;
+  background-color: #2A2B2DFF;
+  border: 2px solid #2DA8D8FF;
+}
+
+.Menu button:hover {
+  background-color: #2DA8D8FF;
+  color: #2A2B2DFF;
+}
+
+.MainText {
+  text-align: center;
+  padding-bottom: 600px;
+  padding-top: 20px;
+  background-image: url(../Background_images/background_img_first.png);
+  background-size: cover;
+}
+
+.MainText h4 {
+  color: #C8FFF6;
+  font-size: 140%;
+}
+
+html {
+  box-sizing: border-box;
+}

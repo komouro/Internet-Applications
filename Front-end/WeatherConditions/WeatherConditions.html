@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MouroApp</title>
+  <link rel="stylesheet" type="text/css" href="WeatherConditionsStyle.css">
+</head>
+<body>
+  <div class="main" ng-app="WeatherConditionsPage" ng-controller="WeatherConditionsController">
+    <div class="appName">
+      <h2>MOURO APP</h2>
+    </div>
+    <div class="Menu">
+      <button ng-click="EnterHomePage()">Home</button>
+      <button ng-click="EnterNearestStationsPage()">Nearest stations</button>
+      <button ng-click="EnterCommonPathPage()">Connection Routes</button>
+      <button ng-click="EnterWeatherConditionsPage()">Weather conditions</button>
+    </div>
+    <div class="MainText">
+      <div class="Description">
+        <h2>Weather Conditions</h2>
+        <h3>Find the bus lines that have a source-station with no raining conditions.</h3>
+        <br>
+        <h4>
+          You need to specify the type of station you are interested in (station type)
+          and the source of the information which can be provided either via local datasets or web service (service type).
+          If you choose the option "source" for the station type, the server will return the stations where it is not raining
+          and the bus lines that you can use from these stations.
+          If you choose the option "destination" for the station type, the server will return the stations that are reachable
+          from points where it is not raining and the bus lines that you can use to get to these stations.
+        </h4>
+      </div>
+      <div class="InputSlots">
+        <form id="submission_format" method="get" action="" target="_blank">
+          <p>Station type: <select ng-options="y for y in station_options" ng-model="stationtype"></select></p>
+          <p>Service type: <select ng-options="x for x in service_options" ng-model="service"></select></p>
+        <br>
+        <div class="Lastbuttons">
+          <p>
+            <input type="submit" value="Submit" ng-mouseenter="RequestReadyForSubmission()"></input>
+          </p>
+        </div>
+        <br>
+        </form>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="WeatherConditionsScript.js"></script>
+
+</body>
+</html>
