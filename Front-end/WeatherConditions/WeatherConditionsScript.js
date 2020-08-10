@@ -1,6 +1,7 @@
 var app = angular.module("WeatherConditionsPage", []);
 app.controller('WeatherConditionsController',  function($scope, $window) {
-  $scope.stationtype = "both"
+  $scope.stationtype = null;
+  $scope.service = null;
   $scope.service_options = ["local", "web"]
   $scope.station_options = ["source", "destination", "both"]
   $scope.EnterHomePage = function () {
@@ -15,12 +16,22 @@ app.controller('WeatherConditionsController',  function($scope, $window) {
   $scope.EnterWeatherConditionsPage = function () {
     $window.location.href = "../WeatherConditions/WeatherConditions.html";
   }
-  $scope.RequestReadyForSubmission = function () {
+  $scope.MakeTheRequest = function () {
     const t = $scope.stationtype
     const s = $scope.service
-    var url_format = "http://localhost:8765/Mouro/api/WeatherConditions"
-    console.log(url_format);
-    var url = url_format + "/" + t + "/" + s
-    document.getElementById("submission_format").action = url;
+    if (t == null || s == null) {
+      console.log("All parameters are required.");
+    }
+    else {
+      var params = "?t=" + t + "&s=" + s;
+      console.log(params);
+      var new_window = "../WeatherConditionsOutput/WeatherConditionsOutput.html" + params;
+      console.log(new_window);
+      $window.location.href = "../WeatherConditionsOutput/WeatherConditionsOutput.html" + params;
+    }
+  }
+  $scope.ClearSlots = function () {
+    $scope.stationtype = null;
+    $scope.service = null;
   }
 });

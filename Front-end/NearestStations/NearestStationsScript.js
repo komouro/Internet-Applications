@@ -1,5 +1,9 @@
 var app = angular.module("NearestStationsPage", []);
-app.controller('NearestStationsController',  function($scope, $window, $http) {
+app.controller('NearestStationsController',  function($scope, $window) {
+  $scope.lat = null;
+  $scope.lon = null;
+  $scope.num = null;
+  $scope.service = null;
   $scope.service_options = ["local", "web"]
   $scope.EnterHomePage = function () {
     $window.location.href = "../MouroAppHome/Home.html";
@@ -13,14 +17,23 @@ app.controller('NearestStationsController',  function($scope, $window, $http) {
   $scope.EnterWeatherConditionsPage = function () {
     $window.location.href = "../WeatherConditions/WeatherConditions.html";
   }
-  $scope.RequestReadyForSubmission = function () {
+  $scope.SubmissionReady = function () {
     const x = $scope.lat
     const y = $scope.lon
     const c = $scope.num
     const s = $scope.service
-    var url_format = "http://localhost:8765/Mouro/api/NearestStations"
-    var url = url_format + "/" + x.toString() + "/" + y.toString()
-    url = url + "/" + c.toString() + "/" + s
-    document.getElementById("submission_format").action = url;
+    if (x == null || y == null || c == null || s == null) {
+      console.log("All parameters are required.");
+    }
+    else {
+      var params = "?x=" + x.toString() + "&y=" + y.toString() + "&c=" + c.toString() + "&s=" + s;
+      $window.location.href = "../NearestStationsOutput/NearestStationsOutput.html" + params;
+    }
+  }
+  $scope.ClearSlots = function () {
+    $scope.lat = null;
+    $scope.lon = null;
+    $scope.num = null;
+    $scope.service = null;
   }
 });

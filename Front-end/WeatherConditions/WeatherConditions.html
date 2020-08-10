@@ -31,23 +31,23 @@
         </h4>
       </div>
       <div class="InputSlots">
-        <form id="submission_format" method="get" action="" target="_blank">
-          <p>Station type: <select ng-options="y for y in station_options" ng-model="stationtype"></select></p>
-          <p>Service type: <select ng-options="x for x in service_options" ng-model="service"></select></p>
+        <p>Station type: <select ng-options="y for y in station_options" ng-model="stationtype"></select></p>
+        <p>Service type: <select ng-options="x for x in service_options" ng-model="service"></select></p>
         <br>
         <div class="Lastbuttons">
           <p>
-            <input type="submit" value="Submit" ng-mouseenter="RequestReadyForSubmission()"></input>
+            <button ng-click="ClearSlots()">Reset</button>
+            <button ng-click="MakeTheRequest()">Sumbit</button>
           </p>
         </div>
         <br>
-        </form>
         <br>
       </div>
     </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="WeatherConditionsScript.js"></script>
 
 </body>

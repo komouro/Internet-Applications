@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MouroApp</title>
+  <link rel="stylesheet" type="text/css" href="ConnectionRoutesOutputStyle.css">
+</head>
+<body>
+  <div class="main" ng-app="ConnectionRoutesOutputPage" ng-controller="ConnectionRoutesOutputController">
+    <div class="appName">
+      <h2>MOURO APP</h2>
+    </div>
+    <div class="Menu">
+      <button ng-click="EnterHomePage()">Home</button>
+      <button ng-click="EnterNearestStationsPage()">Nearest stations</button>
+      <button ng-click="EnterCommonPathPage()">Connection Routes</button>
+      <button ng-click="EnterWeatherConditionsPage()">Weather conditions</button>
+    </div>
+    <div class="MainText">
+      <div class="QueryTitle">
+        <h2> Nearest Stations </h2>
+      </div>
+      <div class="Output">
+        <p>
+          <button ng-click="MakeTheRequest()">Update</button>
+          <button ng-click="ShowTable()">Show</button>
+          <button ng-click="HideTable()">Hide</button>
+        </p>
+        <br>
+        <div class="Update_msg">
+          <p>
+            {{Updated}}
+          </p>
+        </div>
+        <div ng-hide="hidden_flag_msg" class="Result_msg_section">
+          <p>
+            {{Result_msg}}
+          </p>
+          <br>
+          <br>
+        </div>
+        <div ng-hide="hidden_flag_best" class="Best_route_section">
+          <p>
+            Best Route
+            <br>
+            <table border=1>
+              <thead>
+                <tr>
+                  <th>Path length</th>
+                  <th>Path by Station ID</th>
+                  <th>Path by Name</th>
+                  <th>Path by Coordinates</th>
+                </tr>
+              </thead>
+              <tr>
+                <td ng-repeat="v_A in result_best">{{v_A}}</td>
+              </tr>
+          </table>
+          </p>
+          <br>
+          <br>
+        </div>
+        <div ng-hide="hidden_flag_alternative" class="Alternative_routes_section">
+          <p>
+            Alternative Routes
+            <br>
+            <table border=1>
+              <thead>
+                <tr>
+                  <th>Path by Station ID </th>
+                  <th>Path by Name </th>
+                  <th>Path by Coordinates </th>
+                </tr>
+              </thead>
+              <tr ng-repeat="item_B in result_alternative">
+                <td ng-repeat="v_B in item_B">{{v_B}}</td>
+              </tr>
+          </table>
+          </p>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="ConnectionRoutesOutputScript.js"></script>
+
+</body>
+</html>

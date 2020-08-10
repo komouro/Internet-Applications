@@ -3,12 +3,11 @@ const https = require('https');
 const fs = require('fs');
 const util = require('util');
 const Stack = require('./../useful_Classes_Algorithms/Stack.js');
-const MinHeap = require('./../useful_Classes_Algorithms/MinHeap.js');
 const Dijkstra = require('./../useful_Classes_Algorithms/Dijkstra.js');
 
 
 const upper_limit_device_id = 1000;
-const upper_limit_stack_checks = 100000;
+const upper_limit_stack_checks = 1000000;
 var total_devices;
 var rawData;
 var station_A;
@@ -32,7 +31,7 @@ function StageEight_Return_Results(res){
 
 
 function StageSeven_Prepare_Data_Results(best_dist, road, res){
-  if (road.length != 1){
+  if (road.length != 1 || station_A == station_B){
     var total_paths_found = tmp_results.length;
     for (var i = 0; i < total_paths_found; i++){
       var r = tmp_results[i].path;
@@ -102,7 +101,54 @@ function StageSeven_Prepare_Data_Results(best_dist, road, res){
 }
 
 
-function StageSix_Find_Best_Route_Dijkstra(res){
+function StageSix_Find_Paths_BFS(best_dist, road, res){
+  if (road.length != 1 || station_A == station_B){
+    var s = station_A;
+    var d = station_B;
+    //console.log(s);
+    //console.log(d);
+    var deck = new Stack();
+    deck.push({node: s, path_stations: [], path_ids: []});
+    var i = counter;
+    var j = upper_limit_stack_checks;
+    while (deck.isEmpty() == false && i > 0 && j > 0){
+      var next_element = deck.pop();
+      var u = next_element.node;
+      if (u == d){
+        var new_path_stations = [...next_element.path_stations];
+        var new_path_ids = [...next_element.path_ids];
+        new_path_stations.push(u);
+        var tmp = {path: new_path_stations, path_ids: new_path_ids};
+        tmp_results.push(tmp);
+        i -= 1;
+      }
+      else{
+        var neighbor_list = neighborhood[u - 1];
+        var total_neighbors = neighbor_list.length;
+        for (var k = total_neighbors-1; k >= 0; k--){
+          var n = neighbor_list[k].neighbor;
+          var c = neighbor_list[k].id;
+          var new_path_stations = [...next_element.path_stations];
+          var check = new_path_stations.includes(n);
+          if (check == false){
+            var new_path_ids = [...next_element.path_ids];
+            new_path_stations.push(u);
+            new_path_ids.push(c);
+            deck.push({node: n, path_stations: new_path_stations, path_ids: new_path_ids});
+          }
+        }
+      }
+      j -= 1;
+    }
+    //console.log(i);
+    //console.log(j);
+    //console.log(deck);
+  }
+  StageSeven_Prepare_Data_Results(best_dist, road, res);
+}
+
+
+function StageFive_Find_Best_Route_Dijkstra(res){
   var s = station_A;
   var d = station_B;
   var road_network = new Array();
@@ -126,54 +172,12 @@ function StageSix_Find_Best_Route_Dijkstra(res){
   //console.log(best_dist);
   //console.log(station_A);
   //console.log(station_B);
-  StageSeven_Prepare_Data_Results(best_dist, path, res);
-}
-
-
-function StageFive_Find_Paths_BFS(res){
-  var s = station_A;
-  var d = station_B;
-  //console.log(s);
-  //console.log(d);
-  var deck = new Stack();
-  deck.push({node: s, path_stations: [], path_ids: []});
-  var i = counter;
-  var j = upper_limit_stack_checks;
-  while (deck.isEmpty() == false && i > 0 && j > 0){
-    var next_element = deck.pop();
-    var u = next_element.node;
-    if (u == d){
-      var new_path_stations = [...next_element.path_stations];
-      var new_path_ids = [...next_element.path_ids];
-      new_path_stations.push(u);
-      var tmp = {path: new_path_stations, path_ids: new_path_ids};
-      tmp_results.push(tmp);
-      i -= 1;
-    }
-    else{
-      var neighbor_list = neighborhood[u - 1];
-      var total_neighbors = neighbor_list.length;
-      for (var k = 0; k < total_neighbors; k++){
-        var n = neighbor_list[k].neighbor;
-        var c = neighbor_list[k].id;
-        var new_path_stations = [...next_element.path_stations];
-        var check = new_path_stations.includes(n);
-        if (check == false){
-          var new_path_ids = [...next_element.path_ids];
-          new_path_stations.push(u);
-          new_path_ids.push(c);
-          deck.push({node: n, path_stations: new_path_stations, path_ids: new_path_ids});
-        }
-      }
-    }
-    j -= 1;
-  }
-  StageSix_Find_Best_Route_Dijkstra(res);
+  StageSix_Find_Paths_BFS(best_dist, path, res);
 }
 
 
 function StageFour_Create_Neighborhood(res){
-  for (var j = 0; j < upper_limit_device_id; j++){
+  for (var k = 0; k < upper_limit_device_id; k++){
     neighborhood.push([]);
   }
   var paths_array = rawData[1];
@@ -183,9 +187,21 @@ function StageFour_Create_Neighborhood(res){
     var d = Number(paths_array[i].Path_destination_device_id);
     var c = paths_array[i].Path_id;
     var geitonas = {id: c, neighbor: d};
-    neighborhood[s - 1].push(geitonas);
+    if (d == station_B){
+      var size = neighborhood[s - 1].length;
+      var tmp_in = geitonas;
+      for (var j = 0; j < size; j++){
+        var tmp_out = neighborhood[s - 1][j];
+        neighborhood[s - 1][j] = tmp_in;
+        var tmp_in = tmp_out;
+      }
+      neighborhood[s - 1].push(tmp_in);
+    }
+    else{
+      neighborhood[s - 1].push(geitonas);
+    }
   }
-  StageFive_Find_Paths_BFS(res);
+  StageFive_Find_Best_Route_Dijkstra(res);
 }
 
 
@@ -198,7 +214,7 @@ function StageThree_Create_Station_Info(res){
     var id = Number(device_array[i].device_id);
     var lat = device_array[i].lat;
     var lon = device_array[i].lon;
-    var coords = "(" + lat + "," + lon + ")";
+    var coords = "( " + lat + " , " + lon + " )";
     var station = {name: name, coords: coords};
     station_info[id - 1] = station;
   }
@@ -348,6 +364,8 @@ function ConnectionRoutes(x1, y1, x2, y2, c, w, res){
   best_route_results = new Array();
   final_results = new Array();
   counter = c;
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   if (w == "local"){
     DataByFileSystem(x1, y1, x2, y2, res);

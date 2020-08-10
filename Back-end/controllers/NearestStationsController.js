@@ -124,6 +124,8 @@ function NearestStations(x, y, n, w, res){
   rawData = new Array();
   results = new Array();
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
   if (w == "local"){
     DataByFileSystem(n, x, y, res);
   }

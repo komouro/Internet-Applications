@@ -31,70 +31,55 @@
   color: #2A2B2DFF;
 }
 
-/*
-.InputSlots {
-  font-size: 120%;
-  float: right;
-  width: 20%;
-  text-align: center;
-  margin-right: 10%;
-  margin-top: -30%;
-  border: 2px solid #2DA8D8FF;
-  padding-left: 20px;
-  padding-right: 20px;
-  background-color: #FFBF00;
-}
-*/
-
-/*
-
-*/
-
 .MainText {
-  content: "";
-  display: table;
-  clear: both;
+  float: center;
   text-align: center;
-  background-image: url(../Background_images/background_img_second.png);
-  background-size: cover;
-  padding-top: 40px;
-  padding-bottom: 50%;
+  background-color: #181729;
+  padding: 10px;
+  padding-bottom: 30%;
 }
 
-.Description {
-  float: left;
-  width: 45%;
-  padding: 20px;
+.QueryTitle {
   color: #C8FFF6;
+  font-size: 130%;
+}
+
+.Update_msg {
+  color: #C8FFF6;
+}
+
+.Output {
   font-size: 120%;
 }
 
-.InputSlots {
-  float: left;
-  width: 45%;
-  padding: 20px;
-  font-size: 120%;
-  border: 2px solid #2DA8D8FF;
-  background-color: #FFBF00;
-}
-
-.Lastbuttons button {
-  display: inline-block;
+.Output button {
   color: #2DA8D8FF;
   text-align: center;
-  padding: 10px 16px;
-  font-size: 13px;
-  margin: 4px 4px;
-  transition-duration: 0.4s;
+  padding: 16px 32px;
+  font-size: 16px;
+  margin: 2px 2px;
   text-decoration: none;
+  transition-duration: 0.6s;
   cursor: pointer;
   background-color: #2A2B2DFF;
   border: 2px solid #2DA8D8FF;
 }
 
-.Lastbuttons button:hover {
+.Output button:hover{
   background-color: #2DA8D8FF;
   color: #2A2B2DFF;
+}
+
+.Output table {
+  /*
+  color: #2A2B2DFF;
+  background-color: #C8FFF6;
+  */
+  margin-left: 10px;
+  color: #2DA8D8FF;
+  background-color: #2A2B2DFF;
+  width: 95%;
+  table-layout: fixed;
 }
 
 html {

@@ -26,7 +26,10 @@ function StageFive_Return_Result(res){
 
 
 function StageFour_Fix_Result(t, res){
+  var source_res = new Array();
+  var destination_res = new Array();
   if (t == "source"){
+    destination_res.push({});
     for (var i = 0; i < upper_limit_device_id; i++){
       if (marked_stations_origin[i] == true){
         var a = (i + 1).toString();
@@ -35,11 +38,12 @@ function StageFour_Fix_Result(t, res){
         var d = good_stations_no_rain[i];
         var e = "We can use " + good_stations_no_rain[i].length + " bus line(s) from the station " + b + " where it is not raining.";
         var tmp = {origin_id: a, origin_name: b, origin_coords: c, bus_lines: d, Explanation: e};
-        results.push(tmp);
+        source_res.push(tmp);
       }
     }
   }
   else if (t == "destination"){
+    source_res.push({});
     for (var j = 0; j < upper_limit_device_id; j++){
       if (marked_stations_destination[j] == true){
         var a = (j + 1).toString();
@@ -48,7 +52,7 @@ function StageFour_Fix_Result(t, res){
         var d = reachable_stations[j];
         var e = "We can use " + reachable_stations[j].length + " bus line(s) to get to station " + b + " by another station where it is not raining.";
         var tmp = {destination_id: a, destination_name: b, destination_coords: c, bus_lines: d, Explanation: e};
-        results.push(tmp);
+        destination_res.push(tmp);
       }
     }
   }
@@ -61,7 +65,7 @@ function StageFour_Fix_Result(t, res){
         var d = good_stations_no_rain[k];
         var e = "We can use " + good_stations_no_rain[k].length + " bus line(s) from the station " + b + " where it is not raining.";
         var tmp = {origin_id: a, origin_name: b, origin_coords: c, bus_lines: d, Explanation: e};
-        results.push(tmp);
+        source_res.push(tmp);
       }
     }
     for (var u = 0; u < upper_limit_device_id; u++){
@@ -72,13 +76,17 @@ function StageFour_Fix_Result(t, res){
         var d = reachable_stations[u];
         var e = "We can use " + reachable_stations[u].length + " bus line(s) to get to station " + b + " by another station where it is not raining.";
         var tmp = {destination_id: a, destination_name: b, destination_coords: c, bus_lines: d, Explanation: e};
-        results.push(tmp);
+        destination_res.push(tmp);
       }
     }
   }
   else{
-    res.send("Bad type of station (sourse, destination, both). Please check the parameters of the query.");
+    error_msg = {"Error Message":"Bad type of station (sourse, destination, both). Please check the parameters of the query."};
+    source_res.push(error_msg);
+    destination_res.push(error_msg);
   }
+  var final_res = {"Source": source_res, "Destination": destination_res};
+  results.push(final_res);
   StageFive_Return_Result(res);
 }
 
@@ -126,7 +134,7 @@ function StageTwo_Prepare_Data_Arrays(t, res, flag){
       var id = Number(device_array[i].device_id);
       var lat = device_array[i].lat;
       var lon = device_array[i].lon;
-      var coords = "(" + lat + "," + lon + ")";
+      var coords = "( " + lat + " , " + lon + " )";
       var station = {name: name, coords: coords};
       station_info[id - 1] = station;
     }
@@ -257,6 +265,8 @@ function WeatherConditions(t, w, res){
   edges = new Array();
   good_stations_no_rain = new Array();
   reachable_stations = new Array();
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   if (w == "local"){
     DataByFileSystem(t, res);

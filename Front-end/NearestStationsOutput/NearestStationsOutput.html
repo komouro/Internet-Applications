@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MouroApp</title>
+  <link rel="stylesheet" type="text/css" href="NearestStationsOutputStyle.css">
+</head>
+<body>
+  <div class="main" ng-app="NearestStationsOutputPage" ng-controller="NearestStationsOutputController">
+    <div class="appName">
+      <h2>MOURO APP</h2>
+    </div>
+    <div class="Menu">
+      <button ng-click="EnterHomePage()">Home</button>
+      <button ng-click="EnterNearestStationsPage()">Nearest stations</button>
+      <button ng-click="EnterCommonPathPage()">Connection Routes</button>
+      <button ng-click="EnterWeatherConditionsPage()">Weather conditions</button>
+    </div>
+    <div class="MainText">
+      <div class="QueryTitle">
+        <h2> Nearest Stations </h2>
+      </div>
+      <div class="Output">
+        <p>
+          <button ng-click="MakeTheRequest()">Update</button>
+          <button ng-click="ShowTable()">Show</button>
+          <button ng-click="HideTable()">Hide</button>
+        </p>
+        <br>
+        <div class="Update_msg">
+          <p>
+            {{Updated}}
+          </p>
+        </div>
+        <table ng-hide="hidden_flag" border=1>
+          <thead>
+            <tr>
+              <th>Station ID</th>
+              <th>Station Name</th>
+              <th>Station Lat</th>
+              <th>Station Lon</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="item in result track by $index">
+            <td ng-repeat="v in item track by $index">{{v}}</td>
+          </tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="NearestStationsOutputScript.js"></script>
+
+</body>
+</html>
