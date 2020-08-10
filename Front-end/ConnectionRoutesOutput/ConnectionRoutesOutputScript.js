@@ -61,7 +61,7 @@ function PrepareResultsForOutput(tmp, $scope){
       h[2] = alternative_routes[i]["Path by coordinates"];
       alter_res.push(h);
     }
-    var msg = "Between the source and the destination " + total_alternative_routes + " routes were found.";
+    var msg = "Between the source (station ID " + source + ") and the destination (station ID " + destination + ") " + total_alternative_routes + " routes were found.";
     msg = msg + " The route with the minimum number of intermediate stopping points is also provided.";
     current_results = new Array();
     current_result_flags = new Array();
