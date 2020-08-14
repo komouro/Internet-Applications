@@ -246,7 +246,6 @@ function DataByWebService(t, res){
     url_for_req[i] = "http://" + ip + ":" + port + pathing + (i-1).toString();
   }
   StageOne_Http_Request(url_for_req, t, res, 0);
-  //res.send("Not implemented yet! (query for weather conditions - web service)");
 }
 
 
