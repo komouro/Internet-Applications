@@ -23,8 +23,8 @@
       <div class="Output">
         <p>
           <button ng-click="MakeTheRequest()">Update</button>
-          <button ng-click="ShowTable()">Show</button>
-          <button ng-click="HideTable()">Hide</button>
+          <button ng-click="ShowTable()" ng-hide="LoadingTime">Show</button>
+          <button ng-click="HideTable()" ng-hide="LoadingTime">Hide</button>
         </p>
         <br>
         <div class="Update_msg">

@@ -4,6 +4,7 @@ var current_results;
 function AfterUpdate ($scope) {
   $scope.$apply(function() {
     $scope.Updated = "Information has been updated. Press 'Show' to see the results.";
+    $scope.LoadingTime = false;
   });
   console.log("Communication with back - end was a success.");
 }
@@ -58,6 +59,7 @@ app_output.controller('NearestStationsOutputController',  function($scope, $wind
   $scope.result = new Array();
   current_results = new Array();
   $scope.hidden_flag = true;
+  $scope.LoadingTime = true;
   $scope.Updated = "Please wait. Loading updated information...";
   Get_Parameters_And_Send_Request(our_loc, $scope);
   $scope.EnterHomePage = function () {
@@ -76,6 +78,7 @@ app_output.controller('NearestStationsOutputController',  function($scope, $wind
     $scope.result = new Array();
     current_results = new Array();
     $scope.hidden_flag = true;
+    $scope.LoadingTime = true;
     $scope.Updated = "Please wait. Loading updated information...";
     Get_Parameters_And_Send_Request(our_loc, $scope);
   }

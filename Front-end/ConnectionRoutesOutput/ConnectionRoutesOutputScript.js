@@ -5,6 +5,7 @@ var current_result_flags;
 function AfterUpdate ($scope) {
   $scope.$apply(function() {
     $scope.Updated = "Information has been updated. Press 'Show' to see the results.";
+    $scope.LoadingTime = false;
   });
   console.log("Communication with back - end was a success.");
 }
@@ -117,6 +118,7 @@ app_output.controller('ConnectionRoutesOutputController',  function($scope, $win
   $scope.hidden_flag_msg = true;
   $scope.hidden_flag_best = true;
   $scope.hidden_flag_alternative = true;
+  $scope.LoadingTime = true;
   $scope.Updated = "Please wait. Loading updated information...";
   Get_Parameters_And_Send_Request(our_loc, $scope);
   $scope.EnterHomePage = function () {
@@ -138,6 +140,7 @@ app_output.controller('ConnectionRoutesOutputController',  function($scope, $win
     $scope.hidden_flag_msg = true;
     $scope.hidden_flag_best = true;
     $scope.hidden_flag_alternative = true;
+    $scope.LoadingTime = true;
     $scope.Updated = "Please wait. Loading updated information...";
     Get_Parameters_And_Send_Request(our_loc, $scope);
   }
